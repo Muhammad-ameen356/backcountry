@@ -4,14 +4,23 @@ import { toast } from "react-toastify";
 import axiosInstance from "../../utils/axiosInstance";
 
 export const fetchProducts = createAsyncThunk(
-  "post/fetchProducts",
+  "products/fetchProducts",
   async () => {
     const response = await axiosInstance.get(
       // "/products/categories/bc-mens-shirts"
       // "/products/search/car?q="
       "/products/search/null?q="
     );
-    console.log(response, "res");
+    // console.log(response, "res");
+    return response;
+  }
+);
+
+export const searchProducts = createAsyncThunk(
+  "products/searchProducts",
+  async (search) => {
+    const response = await axiosInstance.get(`/products/search/${search}?q=`);
+    console.log(response);
     return response;
   }
 );
@@ -21,6 +30,7 @@ export const productsSlice = createSlice({
   initialState: {
     productLoading: false,
     products: [],
+    // searchProducts: [],
   },
   reducers: {},
   extraReducers(builder) {
@@ -36,6 +46,19 @@ export const productsSlice = createSlice({
         toast.success("Successfully fetched Products");
       })
       .addCase(fetchProducts.rejected, (state, action) => {
+        state.postLoading = false;
+      })
+      .addCase(searchProducts.pending, (state, action) => {
+        state.productLoading = true;
+        toast.info("Loading...");
+      })
+      .addCase(searchProducts.fulfilled, (state, action) => {
+        state.productLoading = false;
+        state.products = action.payload.data.products;
+        toast.dismiss();
+        toast.success("Successfully Search Products");
+      })
+      .addCase(searchProducts.rejected, (state, action) => {
         state.postLoading = false;
       });
   },

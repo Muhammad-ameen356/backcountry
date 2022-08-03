@@ -8,6 +8,7 @@ import store from "./store/store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "antd/dist/antd.css";
 import "react-toastify/dist/ReactToastify.css";
+import 'react-loading-skeleton/dist/skeleton.css'
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(

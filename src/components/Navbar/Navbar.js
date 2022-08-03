@@ -9,10 +9,30 @@ import { BiSearch } from "react-icons/bi";
 import { FaShoppingCart } from "react-icons/fa";
 import { HiChatAlt2 } from "react-icons/hi";
 import { IoCall, IoPersonCircleSharp } from "react-icons/io5";
+import {
+  fetchProducts,
+  searchProducts,
+} from "../../store/reducers/productReducer";
+import { useDispatch } from "react-redux";
+import UseQuery from "../../utils/hooks/UseQuery";
 // import "../../App.scss";
 
 const NavbarComponent = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const query = UseQuery();
+  const searchTerm = query.get("search");
+  const [search, setSearch] = useState("");
+
+  console.log(searchTerm);
+
+  const searchProduct = (e) => {
+    e.preventDefault();
+    console.log(searchTerm);
+    dispatch(search ? searchProducts(search) : dispatch(fetchProducts()));
+    navigate(`?search=${search}`);
+  };
+
   return (
     <>
       <style type="text/css">
@@ -38,66 +58,78 @@ const NavbarComponent = () => {
             }
         `}
       </style>
-      <HeaderSlider />
-      <Container fluid>
-        <Navbar
-          collapseOnSelect
-          expand="lg"
-          bg="none"
-          variant="light"
-          className={style.navbarMainContainer}
-          sticky="top"
-        >
-          <Container fluid>
-            <Navbar.Brand href="#home">
-              <img src={Logo} width="220px" alt="" />
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="me-auto">
-                <div className={style.centerNav}>
-                  <div className={style.inputAndBtnContainer}>
-                    <div className={style.inputAndBtnInnerContainer}>
-                      <input
-                        type="text"
-                        className={style.joinInput}
-                        placeholder="Search gear and apparel"
-                      />
-                      <button className={style.joinBtn}>
-                        <BiSearch style={{ fontSize: "24px" }} />
-                      </button>
+      <div className={style.mainContainer}>
+        <HeaderSlider />
+        <Container fluid>
+          <Navbar
+            collapseOnSelect
+            expand="lg"
+            bg="none"
+            variant="light"
+            className={style.navbarMainContainer}
+            // fixed="top"
+          >
+            <Container fluid>
+              <Navbar.Brand href="#home">
+                <img src={Logo} width="220px" alt="" />
+              </Navbar.Brand>
+              <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+              <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="me-auto">
+                  <div className={style.centerNav}>
+                    <div className={style.inputAndBtnContainer}>
+                      <div className={style.inputAndBtnInnerContainer}>
+                        <form onSubmit={searchProduct}>
+                          <input
+                            type="text"
+                            className={style.joinInput}
+                            placeholder="Search gear and apparel"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                          />
+                          <button className={style.joinBtn}>
+                            <BiSearch style={{ fontSize: "24px" }} />
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                    <div className={style.chatMainContainer}>
+                      <div>
+                        <HiChatAlt2 />
+                      </div>
+                      <div>Chat</div>
+                    </div>
+                    <div className={style.numberMainContainer}>
+                      <div>
+                        <IoCall />
+                      </div>
+                      <div>1-800-409-4502</div>
                     </div>
                   </div>
-                  <div className={style.chatMainContainer}>
+                </Nav>
+                <Nav>
+                  <div className={style.rightNav}>
                     <div>
-                      <HiChatAlt2 />
+                      <p>
+                        {" "}
+                        My account{" "}
+                        <IoPersonCircleSharp
+                          style={{ fontSize: "40px", color: "#c1c1c1" }}
+                        />
+                      </p>
                     </div>
-                    <div>Chat</div>
-                  </div>
-                  <div className={style.numberMainContainer}>
                     <div>
-                      <IoCall />
+                      <FaShoppingCart style={{ fontSize: "20px" }} />
                     </div>
-                    <div>1-800-409-4502</div>
                   </div>
-                </div>
-              </Nav>
-              <Nav>
-                <div className={style.rightNav}>
-                  <div>
-                    <p> My account <IoPersonCircleSharp style={{fontSize: "40px", color: "#c1c1c1"}} /></p>
-                  </div>
-                  <div>
-                    <FaShoppingCart style={{fontSize: "20px",}} />
-                  </div>
-                </div>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </Container>
-      <div style={{ marginTop: 20 }}>
-        <Outlet />
+                </Nav>
+              </Navbar.Collapse>
+            </Container>
+          </Navbar>
+        </Container>
+        <div style={{ marginTop: 20 }}>
+          <Outlet />
+        </div>
       </div>
     </>
   );

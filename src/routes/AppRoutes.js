@@ -12,7 +12,7 @@ const AppRoutes = () => {
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
       </Route>
-      <Route path="*" element={<Error />} />
+      {/* <Route path="*" element={<Error />} /> */}
     </Routes>
   );
 };
