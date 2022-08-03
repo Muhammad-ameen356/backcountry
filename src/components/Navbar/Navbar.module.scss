@@ -1,0 +1,125 @@
+@use "../../root";
+
+.navbarMainContainer {
+  // -webkit-box-shadow: 0px 3px 11px -3px rgba(0, 0, 0, 0.54);
+  // -moz-box-shadow: 0px 3px 11px -3px rgba(0, 0, 0, 0.54);
+  // box-shadow: 0px 3px 11px -3px rgba(0, 0, 0, 0.54);
+  // background-color: white;
+  margin: 10px 110px;
+  padding-bottom: 20px !important;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black;
+
+  .centerNav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    .inputAndBtnContainer {
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+
+      .inputAndBtnInnerContainer {
+        position: relative;
+        // margin-top: 40px;
+        .joinInput {
+          padding: 8px 60px;
+          width: 500px;
+          border-radius: 50px;
+          outline: none;
+          border: none;
+          background-color: black;
+          color: white;
+        }
+        .joinBtn {
+          position: absolute;
+          padding: 0px;
+          border-radius: 50px;
+          left: 10px;
+          top: 7px;
+          background-color: black;
+          color: white;
+          outline: none;
+          border: none;
+        }
+      }
+    }
+
+    .chatMainContainer {
+      display: flex;
+      align-items: center;
+      padding-left: 60px;
+      cursor: pointer;
+      :nth-child(1) {
+        font-size: 24px;
+      }
+      :nth-child(2) {
+        font-size: 16px;
+        padding-left: 10px;
+      }
+    }
+    .numberMainContainer {
+      display: flex;
+      align-items: center;
+      padding-left: 60px;
+      cursor: pointer;
+      :nth-child(1) {
+        font-size: 24px;
+      }
+      :nth-child(2) {
+        font-size: 16px;
+        padding-left: 10px;
+      }
+    }
+  }
+
+  .rightNav {
+    display: flex;
+    align-items: center;
+    div:nth-child(1) p {
+      font-size: 18px;
+      margin-right: 24px;
+      margin-bottom: 0px !important;
+    }
+    div:nth-child(2) {
+      font-size: 18px;
+      // margin-right: 14px;
+      // margin-bottom: 0px !important;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    margin: 10px 0px;
+    .centerNav {
+      display: block;
+      .inputAndBtnContainer {
+        .inputAndBtnInnerContainer {
+          .joinInput {
+            width: auto;
+          }
+        }
+      }
+      .chatMainContainer {
+        padding-left: 10px;
+      }
+      .numberMainContainer {
+        padding-left: 10px;
+      }
+    }
+  }
+}
+
+.joinInput::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+.joinInput:-ms-input-placeholder {
+  color: white;
+}
+
+.joinInput::-ms-input-placeholder {
+  color: white;
+}
