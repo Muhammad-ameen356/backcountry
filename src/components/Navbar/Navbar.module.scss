@@ -35,6 +35,18 @@
           outline: none;
           border: none;
         }
+        .cancelBtn {
+          position: absolute;
+          padding: 0px;
+          border-radius: 50px;
+          right: 10px;
+          top: 7px;
+          background-color: black;
+          color: white;
+          outline: none;
+          border: none;
+          cursor: pointer;
+        }
       }
     }
 

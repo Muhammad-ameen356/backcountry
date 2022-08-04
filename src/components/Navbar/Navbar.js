@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Logo from "../../assets/images/backcountrylogo.png";
 import style from "./Navbar.module.scss";
 import { Navbar, Container, Nav } from "react-bootstrap";
@@ -8,6 +8,7 @@ import { BiSearch } from "react-icons/bi";
 import { FaShoppingCart } from "react-icons/fa";
 import { HiChatAlt2 } from "react-icons/hi";
 import { IoCall, IoPersonCircleSharp } from "react-icons/io5";
+import { MdCancel } from "react-icons/md";
 import {
   fetchProducts,
   searchProducts,
@@ -22,12 +23,15 @@ const NavbarComponent = () => {
   const searchTerm = query.get("search");
   const [search, setSearch] = useState("");
 
-  console.log(searchTerm);
-
-  const searchProduct = (e) => {
-    e && e.preventDefault();
-    dispatch(search ? searchProducts(search) : fetchProducts());
-    navigate(search ? `?search=${search}` : "/");
+  const searchProduct = (search) => {
+    console.log(search);
+    if (search) {
+      dispatch(search ? searchProducts(search) : fetchProducts());
+      navigate(search ? `?search=${search}` : "/");
+    } else {
+      setSearch("");
+      dispatch(fetchProducts());
+    }
   };
 
   useEffect(() => searchProduct(), []);
@@ -78,7 +82,12 @@ const NavbarComponent = () => {
                   <div className={style.centerNav}>
                     <div className={style.inputAndBtnContainer}>
                       <div className={style.inputAndBtnInnerContainer}>
-                        <form onSubmit={searchProduct}>
+                        <form
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            searchProduct(search);
+                          }}
+                        >
                           <input
                             type="text"
                             className={style.joinInput}
@@ -89,6 +98,17 @@ const NavbarComponent = () => {
                           <button className={style.joinBtn}>
                             <BiSearch style={{ fontSize: "24px" }} />
                           </button>
+                          {search && (
+                            <div
+                              className={style.cancelBtn}
+                              onClick={() => {
+                                // setSearch("");
+                                searchProduct("");
+                              }}
+                            >
+                              <MdCancel style={{ fontSize: "24px" }} />
+                            </div>
+                          )}
                         </form>
                       </div>
                     </div>
