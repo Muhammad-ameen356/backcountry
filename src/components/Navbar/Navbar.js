@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../assets/images/backcountrylogo.png";
 import style from "./Navbar.module.scss";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import HeaderSlider from "../HeaderSlider";
-import { AiOutlineSearch } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { FaShoppingCart } from "react-icons/fa";
 import { HiChatAlt2 } from "react-icons/hi";
@@ -15,7 +14,6 @@ import {
 } from "../../store/reducers/productReducer";
 import { useDispatch } from "react-redux";
 import UseQuery from "../../utils/hooks/UseQuery";
-// import "../../App.scss";
 
 const NavbarComponent = () => {
   const navigate = useNavigate();
@@ -27,11 +25,12 @@ const NavbarComponent = () => {
   console.log(searchTerm);
 
   const searchProduct = (e) => {
-    e.preventDefault();
-    console.log(searchTerm);
-    dispatch(search ? searchProducts(search) : dispatch(fetchProducts()));
-    navigate(`?search=${search}`);
+    e && e.preventDefault();
+    dispatch(search ? searchProducts(search) : fetchProducts());
+    navigate(search ? `?search=${search}` : "/");
   };
+
+  useEffect(() => searchProduct(), []);
 
   return (
     <>

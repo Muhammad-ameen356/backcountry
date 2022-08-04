@@ -1,26 +1,19 @@
 import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
 import CardComponent from "../../components/Card";
-import Loader from "../../components/Loader/Loader";
-import { decrease, increase } from "../../store/reducers/counterReducer";
 import { fetchProducts } from "../../store/reducers/productReducer";
 import CardSkeleton from "../../components/Skeleton/CardSkeleton";
 import { ShimmerPostItem } from "react-shimmer-effects";
 
 const Home = () => {
-  const { value } = useSelector((state) => state.counter);
   const { productLoading, products } = useSelector((state) => state.product);
-  // const search = useLocation();
- 
 
   const dispatch = useDispatch();
-  // console.log(search);
 
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchProducts());
+  // }, []);
 
   {
     /* <Col md={4} lg={3} sm={6}>
